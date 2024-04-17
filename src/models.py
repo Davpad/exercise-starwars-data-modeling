@@ -15,8 +15,10 @@ class User(Base):
     name = Column(String(250), nullable=False)
     email = Column(String(250), nullable=False)
     password = Column(String(250), nullable=False)
-    favoritesPerson = relationship('FavoritesPerson', backref='user', lazy=True)
-    favorites = relationship('favorites', backref='user', lazy=True)
+    favorites_persons = relationship('FavoritesPerson', backref='user', lazy=True)
+    favorites_planets = relationship('FavoritesPlanet', backref='user', lazy=True)
+    favorites_vehicles = relationship('FavoritesVehicle', backref='user', lazy=True)
+
 
 class Person(Base):
     __tablename__ = 'person'
@@ -24,7 +26,7 @@ class Person(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    favorites = relationship('FavoritesPerson', backref='person', lazy=True)
+    Persons = relationship('Person', backref='person', lazy=True)
 
 class FavoritesPerson(Base):
     __tablename__ = 'favorites_person'
@@ -34,10 +36,12 @@ class FavoritesPerson(Base):
     # street_name = Column(String(250))
     # street_number = Column(String(250))
     # post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'),nullable = False)
+    person_id = Column(Integer, ForeignKey('person.id'))
     person = relationship(Person)
-    user_id = Column(Integer, ForeignKey('user.id'),nullable = False)
+    user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)    
+    Persons = relationship('Person', backref='person', lazy=True)
+
 
 class Planet(Base):
     __tablename__ = 'planet'
@@ -45,7 +49,7 @@ class Planet(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    favorites = relationship('favoritesPlanet', backref='planet', lazy=True)
+    favorites_planet = relationship('FavoritesPlanet', backref='planet', lazy=True)
 
 class FavoritesPlanet(Base):
     __tablename__ = 'favorites_planet'
@@ -55,9 +59,9 @@ class FavoritesPlanet(Base):
     # street_name = Column(String(250))
     # street_number = Column(String(250))
     # post_code = Column(String(250), nullable=False)
-    planet_id = Column(Integer, ForeignKey('planet.id'),nullable = False)
+    planet_id = Column(Integer, ForeignKey('planet.id'))
     planet = relationship(Planet)
-    user_id = Column(Integer, ForeignKey('user.id'),nullable = False)
+    user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
 class Vehicle(Base):
@@ -66,7 +70,7 @@ class Vehicle(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    favorites = relationship('favorites', backref='vehicle', lazy=True)   
+    favorites_vehicles = relationship('FavoritesVehicle', backref='vehicle', lazy=True)   
 
 class FavoritesVehicle(Base):
     __tablename__ = 'favorites_vehicle'
@@ -76,9 +80,9 @@ class FavoritesVehicle(Base):
     # street_name = Column(String(250))
     # street_number = Column(String(250))
     # post_code = Column(String(250), nullable=False)
-    vehicle_id = Column(Integer, ForeignKey('vehicle.id'),nullable = False)
+    vehicle_id = Column(Integer, ForeignKey('vehicle.id'))
     vehicle = relationship(Vehicle)
-    user_id = Column(Integer, ForeignKey('user.id'),nullable = False)
+    user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
     def to_dict(self):
