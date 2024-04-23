@@ -26,21 +26,23 @@ class Person(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    Persons = relationship('Person', backref='person', lazy=True)
+    height = Column(Integer)
+    lifespan = Column(Integer)
+    classification = Column(String(80))
+    designation = Column(String(80))
+    eye_color = Column(String(80))
+    hair_color = Column(String(80))
+    language = Column(String(80))
+    skin_color = Column(String(80))
+    favorites_persons = relationship('FavoritesPerson', backref='person', lazy=True)
 
 class FavoritesPerson(Base):
     __tablename__ = 'favorites_person'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    # street_name = Column(String(250))
-    # street_number = Column(String(250))
-    # post_code = Column(String(250), nullable=False)
-    person_id = Column(Integer, ForeignKey('person.id'))
-    person = relationship(Person)
     user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)    
-    Persons = relationship('Person', backref='person', lazy=True)
+    person_id = Column(Integer, ForeignKey('person.id'))
 
 
 class Planet(Base):
@@ -49,20 +51,23 @@ class Planet(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    favorites_planet = relationship('FavoritesPlanet', backref='planet', lazy=True)
+    climate = Column(String(80))
+    diameter = Column(Integer)
+    gravity = Column(Integer)
+    orbital_period = Column(Integer)
+    population = Column(Integer)
+    rotational_period = Column(Integer)
+    surface_water = Column(Integer)
+    terrain = Column(String(80))
+    favorites_planets = relationship('FavoritesPlanet', backref='planet', lazy=True)
 
 class FavoritesPlanet(Base):
     __tablename__ = 'favorites_planet'
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    # street_name = Column(String(250))
-    # street_number = Column(String(250))
-    # post_code = Column(String(250), nullable=False)
-    planet_id = Column(Integer, ForeignKey('planet.id'))
-    planet = relationship(Planet)
     user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    planet_id = Column(Integer, ForeignKey('planet.id'))
 
 class Vehicle(Base):
     __tablename__ = 'vehicle'
@@ -70,6 +75,16 @@ class Vehicle(Base):
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    cargo_capacity = Column(Integer)
+    consumables = Column(String(80))
+    cost_in_credits = Column(Integer)
+    crew = Column(String(80))
+    lenght = Column(Integer)
+    manufacturer = Column(String(80))
+    max_speed = Column(Integer)
+    model = Column(String(80))
+    passengers = Column(String(80))
+    vehicle_class = Column(String(80))
     favorites_vehicles = relationship('FavoritesVehicle', backref='vehicle', lazy=True)   
 
 class FavoritesVehicle(Base):
@@ -77,13 +92,8 @@ class FavoritesVehicle(Base):
     # Here we define columns for the table address.
     # Notice that each column is also a normal Python instance attribute.
     id = Column(Integer, primary_key=True)
-    # street_name = Column(String(250))
-    # street_number = Column(String(250))
-    # post_code = Column(String(250), nullable=False)
-    vehicle_id = Column(Integer, ForeignKey('vehicle.id'))
-    vehicle = relationship(Vehicle)
     user_id = Column(Integer, ForeignKey('user.id'))
-    user = relationship(User)
+    vehicle_id = Column(Integer, ForeignKey('vehicle.id'))
 
     def to_dict(self):
         return {}
